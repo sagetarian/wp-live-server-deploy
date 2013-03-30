@@ -80,12 +80,22 @@
         $$var = true;
     }
     
-    function liveServerDeploy_get_contents($url) {
+    function liveServerDeploy_get_contents($url, $htaccess_login = '', $htaccess_password = '') {
         if(!function_exists('curl_init') && ini_get('allow_url_fopen'))
             throw "allow_url_fopen disabled and cURL extensions not installed";
-        if(ini_get('allow_url_fopen')) :
-            return file_get_contents($url);
-        else:
+        if(ini_get('allow_url_fopen')) {
+            if(''!=$htaccess_login && ''!= $htaccess_password){
+                $context = stream_context_create(array(
+                    'http' => array(
+                        'header' => "Authorization: Basic " . base64_encode("$htaccess_login:$htaccess_password")
+                    )
+                ));
+                $data = file_get_contents($url, false, $context);
+            } else {
+                $data = file_get_contents($url);
+            }
+            return $data;
+        } else {
             $ch = @curl_init ($url);
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -93,7 +103,7 @@
             $rawdata=curl_exec($ch);
             curl_close ($ch);
             return $rawdata;
-        endif;
+    }
     }
     
     function liveServerDeploy_new_config($db_name, $db_username, $db_password, $db_host) {
