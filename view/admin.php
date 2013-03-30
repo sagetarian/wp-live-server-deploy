@@ -123,6 +123,18 @@
 		        <input name="ignore_list" id="ignore_list" type="text" value="<?php echo $ignore_list; ?>" class="regular-text code"><em>Make a list of directories or file names to ignore. Put between double quotes or comma seperate (If the file includes a comma then put between double quotes). e.g <code>.gitignore, .git, .svn, "cache"</code></em><br>
 		    </td>
 	    </tr>
+            <tr>
+		    <th><label for="db_password">Optional: .htaccess-Login</label></th>
+		    <td>
+		        <input name="htaccess_login" id="db_password" type="text" value="<?php echo $htaccess_login; ?>" class="regular-text code">
+		    </td>
+	    </tr>
+	    <tr>
+		    <th><label for="ignore_list">Optional: .htaccess-Password</label></th>
+		    <td>
+		        <input name="htaccess_password" id="ignore_list" type="text" value="<?php echo $htaccess_password; ?>" class="regular-text code"><br>
+		    </td>
+	    </tr>
 	    </tbody>
     </table>
 <p><strong>NOTICE: Please backup any files or mysql tables on the live server. Although Live Server Deploy aims to provide a seamless deploy, we cannot guarantee that nothing unexpected can happen that might damage your content. Use at own risk.</strong></p>
